@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>FlickList</title>
+        <link rel="shortcut icon" type="image/ico" href="/static/favicon.ico">
+        <style type="text/css">
+            .error {
+                color: red;
+            }
+            .message {
+                color: blue;
+            }
+        </style>
+    </head>
+    <body>
+        <div style='float: right'>
+          {% if 'user' in session %}
+            {{ session['user'] }}
+            <form action="/logout" method="post">
+              <input type="submit" value="Log Out" />
+            </form>
+          {% else %}
+            <a href="login">login</a> | <a href="register">register</a>
+          {% endif %}
+        </div>
+        <h1>
+            <a href="/">FlickList</a>
+        </h1>
+
+        {% with messages = get_flashed_messages(with_categories=True) %}
+          {% if messages %}
+            <ul class=message>
+              {% for category, message in messages %}
+              <li class={{category}}>{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+
+        {% block content %}
+        {% endblock %}
+
+    </body>
+</html>
